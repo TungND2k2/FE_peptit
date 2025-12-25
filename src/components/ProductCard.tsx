@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { Product } from '@/types';
-import { Heart, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface ProductCardProps {

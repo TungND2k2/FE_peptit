@@ -73,7 +73,7 @@ const BlogManagement = () => {
     
     try {
       const blogId = (blog as any)._id || blog.id;
-      await blogService.delete(blogId);
+      await blogService.remove(blogId);
       fetchBlogs();
     } catch (error) {
       console.error('Error deleting blog:', error);
