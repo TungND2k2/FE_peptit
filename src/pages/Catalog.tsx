@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import { Catalog } from '@/types';
 import { catalogService } from '@/services/catalogService';
+import { resolveImageUrl } from '@/services/api';
+import { inquiryUrl } from '@/config/site';
 
 const CatalogPage = () => {
   const [catalogs, setCatalogs] = useState<Catalog[]>([]);
@@ -66,7 +68,7 @@ const CatalogPage = () => {
                 >
                   <div className="relative overflow-hidden aspect-[4/3] bg-gradient-to-br from-smocked-mint to-smocked-sky">
                     <img
-                      src={catalog.imageUrl || '/placeholder-fabric.jpg'}
+                      src={resolveImageUrl(catalog.imageUrl) || '/placeholder-fabric.jpg'}
                       alt={catalog.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
@@ -87,16 +89,19 @@ const CatalogPage = () => {
                           {catalog.price ? `$${catalog.price}` : 'Contact'}
                         </span>
                         <p className="text-sm text-gray-500 font-body mt-1">
-                          {catalog.stock !== null ? `${catalog.stock} yards` : 'In stock'}
+                          {catalog.stock != null ? `${catalog.stock} yards` : 'In stock'}
                         </p>
                       </div>
-                      <motion.button
+                      <motion.a
+                        href={inquiryUrl(catalog.title)}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="bg-primary-500 text-white px-6 py-3 rounded-full hover:bg-primary-600 transition shadow-md font-body font-semibold"
                       >
-                        Order
-                      </motion.button>
+                        Inquire
+                      </motion.a>
                     </div>
                   </div>
                 </motion.div>

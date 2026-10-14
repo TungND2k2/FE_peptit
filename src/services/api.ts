@@ -2,6 +2,10 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
+// Images uploaded to the BE are stored as "/media/<id>"; everything else is used as-is
+export const resolveImageUrl = (url?: string) =>
+  url && url.startsWith('/media/') ? `${API_BASE_URL.replace(/\/$/, '')}${url}` : url || '';
+
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {

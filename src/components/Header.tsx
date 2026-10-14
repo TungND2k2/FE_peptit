@@ -1,7 +1,16 @@
 import { motion } from 'framer-motion';
 import { Search, Menu, X, LayoutDashboard } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+
+const NAV_ITEMS = [
+  { to: '/', label: 'Home' },
+  { to: '/about', label: 'About Us' },
+  { to: '/products', label: 'Smocked Dresses' },
+  { to: '/accessories', label: 'Accessories' },
+  { to: '/catalog', label: 'Fabrics' },
+  { to: '/faq', label: 'FAQ' },
+];
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,22 +39,21 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-primary-600 transition font-body">
-              Home
-            </Link>
-            <Link to="/products" className="text-gray-700 hover:text-primary-600 transition font-body">
-              Smocked Dresses
-            </Link>
-            <Link to="/accessories" className="text-gray-700 hover:text-primary-600 transition font-body">
-              Accessories
-            </Link>
-            <Link to="/catalog" className="text-gray-700 hover:text-primary-600 transition font-body">
-              Fabrics
-            </Link>
-            <Link to="/blog" className="text-gray-700 hover:text-primary-600 transition font-body">
-              Blog
-            </Link>
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === '/'}
+                className={({ isActive }) =>
+                  `relative font-body py-1 transition after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:bg-primary-600 after:transition-all ${
+                    isActive ? 'text-primary-600 after:w-full' : 'text-gray-700 hover:text-primary-600 after:w-0 hover:after:w-full'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
           </nav>
 
           {/* WhatsApp Contact */}
@@ -92,41 +100,19 @@ const Header = () => {
             animate={{ opacity: 1, y: 0 }}
             className="md:hidden mt-4 pb-4 space-y-3"
           >
-            <Link
-              to="/"
-              className="block text-gray-700 hover:text-primary-600 transition font-body py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              to="/products"
-              className="block text-gray-700 hover:text-primary-600 transition font-body py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Smocked Dresses
-            </Link>
-            <Link
-              to="/accessories"
-              className="block text-gray-700 hover:text-primary-600 transition font-body py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Accessories
-            </Link>
-            <Link
-              to="/catalog"
-              className="block text-gray-700 hover:text-primary-600 transition font-body py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Fabrics
-            </Link>
-            <Link
-              to="/blog"
-              className="block text-gray-700 hover:text-primary-600 transition font-body py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Blog
-            </Link>
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === '/'}
+                className={({ isActive }) =>
+                  `block transition font-body py-2 ${isActive ? 'text-primary-600 font-semibold' : 'text-gray-700 hover:text-primary-600'}`
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.label}
+              </NavLink>
+            ))}
             {isAdminLoggedIn && (
               <Link
                 to="/admin/dashboard"

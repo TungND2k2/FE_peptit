@@ -11,7 +11,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-gradient-to-b from-smocked-rose to-smocked-cream mt-20">
+    <footer className="bg-gradient-to-b from-smocked-rose to-smocked-cream">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
@@ -58,6 +58,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/about" className="text-gray-600 hover:text-primary-600 transition">
+                  About Us
+                </Link>
+              </li>
+              <li>
                 <Link to="/blog" className="text-gray-600 hover:text-primary-600 transition">
                   Blog
                 </Link>
@@ -87,9 +92,9 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-primary-600 transition">
+                <Link to="/faq" className="text-gray-600 hover:text-primary-600 transition">
                   FAQ
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -121,8 +126,8 @@ const Footer = () => {
         {/* Bottom */}
         <div className="border-t border-gray-300 mt-8 pt-6">
           <div className="flex flex-col md:flex-row items-center justify-between text-center md:text-left">
-            <p className="text-sm text-gray-600 font-body flex items-center justify-center mb-2 md:mb-0">
-              Made with <Heart className="w-4 h-4 mx-1 text-primary-500 fill-current" /> 
+            <p className="text-sm text-gray-600 font-body mb-2 md:mb-0">
+              Made with <Heart className="inline w-4 h-4 mx-0.5 -mt-0.5 text-primary-500 fill-current" /> 
               by Peptit Elegance © 2025. All rights reserved.
             </p>
             {!isAdminLoggedIn && (

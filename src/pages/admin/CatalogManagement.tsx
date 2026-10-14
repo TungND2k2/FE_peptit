@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, Search } from 'lucide-react';
 import AdminLayout from '@/components/AdminLayout';
+import ImageUploader from '@/components/ImageUploader';
+import { resolveImageUrl } from '@/services/api';
 import { Catalog } from '@/types';
 import { catalogService } from '@/services/catalogService';
 
@@ -158,7 +160,7 @@ const CatalogManagement = () => {
                   <tr key={(catalog as any)._id || catalog.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4">
                       <img
-                        src={catalog.imageUrl}
+                        src={resolveImageUrl(catalog.imageUrl)}
                         alt={catalog.title}
                         className="w-16 h-16 object-cover rounded-lg"
                       />
@@ -257,13 +259,11 @@ const CatalogManagement = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2 font-body">Image URL</label>
-                  <input
-                    type="url"
-                    required
-                    value={formData.imageUrl}
-                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none font-body"
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 font-body">Image</label>
+                  <ImageUploader
+                    single
+                    value={formData.imageUrl ? [formData.imageUrl] : []}
+                    onChange={(urls) => setFormData({ ...formData, imageUrl: urls[0] || '' })}
                   />
                 </div>
                 <div className="flex items-center justify-end space-x-4 pt-4">

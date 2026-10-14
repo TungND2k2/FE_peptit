@@ -5,6 +5,8 @@ import AdminLayout from '@/components/AdminLayout';
 import { Product, Category } from '@/types';
 import { productService } from '@/services/productService';
 import { categoryService } from '@/services/categoryService';
+import { resolveImageUrl } from '@/services/api';
+import ImageUploader from '@/components/ImageUploader';
 
 const ProductManagement = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,7 +20,7 @@ const ProductManagement = () => {
     description: '',
     price: '',
     stock: '',
-    imageUrl: '',
+    gallery: [] as string[],
     idCategory: '',
   });
 
@@ -47,20 +49,24 @@ const ProductManagement = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.gallery.length === 0) {
+      alert('Please add at least one image');
+      return;
+    }
+    const { gallery, ...fields } = formData;
+    const payload = {
+      ...fields,
+      price: parseFloat(formData.price),
+      stock: parseInt(formData.stock),
+      imageUrl: gallery[0],
+      images: gallery.slice(1),
+    };
     try {
       if (editingProduct) {
         const productId = (editingProduct as any)._id || editingProduct.id;
-        await productService.update(productId, {
-          ...formData,
-          price: parseFloat(formData.price),
-          stock: parseInt(formData.stock),
-        });
+        await productService.update(productId, payload);
       } else {
-        await productService.create({
-          ...formData,
-          price: parseFloat(formData.price),
-          stock: parseInt(formData.stock),
-        });
+        await productService.create(payload);
       }
       setShowModal(false);
       setEditingProduct(null);
@@ -79,7 +85,7 @@ const ProductManagement = () => {
       description: product.description,
       price: product.price?.toString() || '',
       stock: product.stock?.toString() || '',
-      imageUrl: product.imageUrl,
+      gallery: [product.imageUrl, ...(product.images || [])].filter(Boolean),
       idCategory: product.idCategory,
     });
     setShowModal(true);
@@ -104,7 +110,7 @@ const ProductManagement = () => {
       description: '',
       price: '',
       stock: '',
-      imageUrl: '',
+      gallery: [],
       idCategory: '',
     });
   };
@@ -173,7 +179,7 @@ const ProductManagement = () => {
                   <tr key={(product as any)._id || product.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4">
                       <img
-                        src={product.imageUrl}
+                        src={resolveImageUrl(product.imageUrl)}
                         alt={product.title}
                         className="w-16 h-16 object-cover rounded-lg"
                       />
@@ -273,13 +279,12 @@ const ProductManagement = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2 font-body">Image URL</label>
-                  <input
-                    type="url"
-                    required
-                    value={formData.imageUrl}
-                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none font-body"
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 font-body">
+                    Images <span className="font-normal text-gray-500">(first one is the main image)</span>
+                  </label>
+                  <ImageUploader
+                    value={formData.gallery}
+                    onChange={(gallery) => setFormData({ ...formData, gallery })}
                   />
                 </div>
                 <div>

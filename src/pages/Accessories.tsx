@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Package, Scissors, Sparkles } from 'lucide-react';
 import { Accessory } from '@/types';
 import { accessoryService } from '@/services/accessoryService';
+import { resolveImageUrl } from '@/services/api';
+import { inquiryUrl } from '@/config/site';
 
 const Accessories = () => {
   const [accessories, setAccessories] = useState<Accessory[]>([]);
@@ -152,7 +154,7 @@ const Accessories = () => {
                 >
                   <div className="relative overflow-hidden aspect-square bg-gradient-to-br from-smocked-peach to-smocked-mint">
                     <img
-                      src={accessory.imageUrl || '/placeholder-accessory.jpg'}
+                      src={resolveImageUrl(accessory.imageUrl) || '/placeholder-accessory.jpg'}
                       alt={accessory.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
@@ -191,16 +193,19 @@ const Accessories = () => {
                           {accessory.price ? `$${accessory.price}` : 'Contact'}
                         </span>
                         <p className="text-xs text-gray-500 font-body mt-1">
-                          {accessory.stock !== null ? `${accessory.stock} in stock` : 'In stock'}
+                          {accessory.stock != null ? `${accessory.stock} in stock` : 'In stock'}
                         </p>
                       </div>
-                      <motion.button
+                      <motion.a
+                        href={inquiryUrl(accessory.title)}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="bg-primary-500 text-white px-4 py-2 rounded-full hover:bg-primary-600 transition shadow-md text-sm font-body font-semibold"
                       >
-                        Add
-                      </motion.button>
+                        Inquire
+                      </motion.a>
                     </div>
                   </div>
                 </motion.div>

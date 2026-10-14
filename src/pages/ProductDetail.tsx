@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingCart, Heart, Share2, Minus, Plus } from 'lucide-react';
+import { ArrowLeft, MessageCircle, Share2, Minus, Plus } from 'lucide-react';
 import { Product } from '@/types';
 import { productService } from '@/services/productService';
+import { resolveImageUrl } from '@/services/api';
+import { CONTACT } from '@/config/site';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +14,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -55,7 +58,25 @@ const ProductDetail = () => {
     );
   }
 
-  const allImages = [product.imageUrl, ...(product.images || [])].filter(Boolean);
+  const allImages = [product.imageUrl, ...(product.images || [])].filter(Boolean).map(resolveImageUrl);
+  const inquiryUrl = `${CONTACT.whatsappUrl}?text=${encodeURIComponent(
+    `Hi Peptit Elegance, I'm interested in "${product.title}" (quantity: ${quantity}).\n${window.location.href}`
+  )}`;
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: product.title, url });
+      } catch {
+        // user closed the share sheet
+      }
+      return;
+    }
+    await navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
   const isDeleted = (product as any).isDeleted || false;
   const isActive = product.isActive !== undefined ? product.isActive : !isDeleted;
 
@@ -184,34 +205,37 @@ const ProductDetail = () => {
 
             {/* Actions */}
             <div className="space-y-3">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                disabled={!isActive}
-                className="w-full bg-primary-600 text-white py-4 rounded-full font-body font-semibold text-lg shadow-lg hover:bg-primary-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              <a
+                href={inquiryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#25D366] text-white py-4 rounded-full font-body font-semibold text-lg shadow-lg hover:brightness-95 transition flex items-center justify-center space-x-2"
               >
-                <ShoppingCart className="w-5 h-5" />
-                <span>{isActive ? 'Add to Cart' : 'Out of Stock'}</span>
-              </motion.button>
+                <MessageCircle className="w-5 h-5" />
+                <span>Inquire on WhatsApp</span>
+              </a>
+              <button
+                type="button"
+                onClick={handleShare}
+                className="w-full bg-white border-2 border-gray-200 text-gray-700 py-3 rounded-full font-body font-semibold hover:border-primary-300 hover:text-primary-600 transition flex items-center justify-center space-x-2"
+              >
+                <Share2 className="w-5 h-5" />
+                <span>{copied ? 'Link copied!' : 'Share'}</span>
+              </button>
+            </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="bg-white border-2 border-primary-600 text-primary-600 py-3 rounded-full font-body font-semibold hover:bg-primary-50 transition flex items-center justify-center space-x-2"
-                >
-                  <Heart className="w-5 h-5" />
-                  <span>Wishlist</span>
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="bg-white border-2 border-gray-300 text-gray-700 py-3 rounded-full font-body font-semibold hover:bg-gray-50 transition flex items-center justify-center space-x-2"
-                >
-                  <Share2 className="w-5 h-5" />
-                  <span>Share</span>
-                </motion.button>
-              </div>
+            {/* Wholesale info */}
+            <div className="grid grid-cols-3 gap-3 text-center">
+              {[
+                { value: '20 pcs', label: 'Min. per design' },
+                { value: '$49', label: 'Sample price' },
+                { value: '4–8 wks', label: 'Production' },
+              ].map((info) => (
+                <div key={info.label} className="rounded-2xl bg-smocked-cream/60 px-2 py-4">
+                  <div className="font-display text-lg font-bold text-gray-800">{info.value}</div>
+                  <div className="font-body text-xs text-gray-500 mt-1">{info.label}</div>
+                </div>
+              ))}
             </div>
 
             {/* Product Details */}

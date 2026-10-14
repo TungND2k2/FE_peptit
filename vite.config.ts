@@ -15,6 +15,8 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3005',
         changeOrigin: true,
+        // BE routes are mounted at the root (/products, /media, ...)
+        rewrite: (path) => path.replace(/^\/api/, ''),
       }
     }
   }

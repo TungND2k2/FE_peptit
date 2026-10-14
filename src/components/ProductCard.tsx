@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Product } from '@/types';
 import { Link } from 'react-router-dom';
+import { resolveImageUrl } from '@/services/api';
 
 interface ProductCardProps {
   product: Product;
@@ -19,7 +20,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <Link to={`/products/${productId}`}>
         <div className="relative overflow-hidden aspect-[3/4] bg-gray-50">
           <img
-            src={product.imageUrl || '/placeholder-dress.jpg'}
+            src={resolveImageUrl(product.imageUrl) || '/placeholder-dress.jpg'}
+            loading="lazy"
             alt={product.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
@@ -40,7 +42,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
       <div className="p-4">
         <Link to={`/products/${productId}`}>
-          <h3 className="font-body text-base font-medium text-gray-800 mb-2 hover:text-primary-600 transition-colors line-clamp-1">
+          <h3 className="font-body text-sm sm:text-base font-medium text-gray-800 mb-1 sm:mb-2 hover:text-primary-600 transition-colors line-clamp-2">
             {product.title}
           </h3>
         </Link>
