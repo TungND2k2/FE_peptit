@@ -9,6 +9,7 @@ import {
   Sparkles,
   Layers,
   Star,
+  MessageCircle,
   LogOut,
   Menu,
   X,
@@ -32,6 +33,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     { icon: Layers, label: 'Catalogs', path: '/admin/catalogs' },
     { icon: BookOpen, label: 'Blogs', path: '/admin/blogs' },
     { icon: Star, label: 'Testimonials', path: '/admin/testimonials' },
+    { icon: MessageCircle, label: 'Website Chats', path: '/admin/website-chats' },
   ];
 
   const handleLogout = () => {

@@ -5,7 +5,7 @@ import { ArrowLeft, MessageCircle, Share2, Minus, Plus } from 'lucide-react';
 import { Product } from '@/types';
 import { productService } from '@/services/productService';
 import { resolveImageUrl } from '@/services/api';
-import { whatsappLink } from '@/config/site';
+import { SITE_NAME, whatsappLink } from '@/config/site';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -59,7 +59,7 @@ const ProductDetail = () => {
   }
 
   const allImages = [product.imageUrl, ...(product.images || [])].filter(Boolean).map(resolveImageUrl);
-  const inquiryUrl = whatsappLink(`Hi Peptit Elegance, I'm interested in "${product.title}" (quantity: ${quantity}).`);
+  const inquiryUrl = whatsappLink(`Hi! I found "${product.title}" on ${SITE_NAME} (quantity: ${quantity}). Could you share pricing?`);
 
   const handleShare = async () => {
     const url = window.location.href;
@@ -205,6 +205,7 @@ const ProductDetail = () => {
             <div className="space-y-3">
               <a
                 href={inquiryUrl}
+                data-chat-item={product.title}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-[#25D366] text-white py-4 rounded-full font-body font-semibold text-lg shadow-lg hover:brightness-95 transition flex items-center justify-center space-x-2"

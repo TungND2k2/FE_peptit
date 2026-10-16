@@ -198,6 +198,7 @@ const Accessories = () => {
                       </div>
                       <motion.a
                         href={inquiryUrl(accessory.title)}
+                        data-chat-item={accessory.title}
                         target="_blank"
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}

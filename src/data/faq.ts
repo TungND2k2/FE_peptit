@@ -1,7 +1,4 @@
-import { whatsappLink } from '@/config/site';
-
-// Built once at load, so the source page is fixed to /faq instead of read at click time
-const FAQ_PAGE = `${window.location.origin}/faq`;
+import { SITE_NAME, whatsappLink } from '@/config/site';
 
 export interface FaqItem {
   question: string;
@@ -23,13 +20,13 @@ export const FAQS: FaqItem[] = [
     answer: ['For detailed information about our order policies, please contact our team.'],
     link: {
       label: 'Ask us on WhatsApp',
-      href: whatsappLink("Hi Peptit Elegance, I'd like to know more about your order policies.", FAQ_PAGE),
+      href: whatsappLink(`Hi! I'm messaging from ${SITE_NAME}. I'd like to know more about your order policies.`),
     },
   },
   {
     question: 'How do I place an order?',
     answer: ['Placing an order is simple! Message us and we will walk you through it step by step.'],
-    link: { label: 'Start on WhatsApp', href: whatsappLink("Hi Peptit Elegance, I'd like to place an order.", FAQ_PAGE) },
+    link: { label: 'Start on WhatsApp', href: whatsappLink(`Hi! I'm messaging from ${SITE_NAME}. I'd like to place an order.`) },
   },
   {
     question: 'What is the minimum order quantity?',

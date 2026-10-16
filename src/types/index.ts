@@ -82,3 +82,16 @@ export interface Testimonial {
   updatedAt?: string;
   isDeleted?: boolean;
 }
+
+export interface ChatClick {
+  _id: string;
+  channel: 'whatsapp' | 'messenger';
+  page: string;
+  item?: string;
+  referrer?: string;
+  landingPage?: string;
+  timezone?: string;
+  language?: string;
+  device?: 'mobile' | 'desktop';
+  createdAt: string;
+}

@@ -94,6 +94,7 @@ const CatalogPage = () => {
                       </div>
                       <motion.a
                         href={inquiryUrl(catalog.title)}
+                        data-chat-item={catalog.title}
                         target="_blank"
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}

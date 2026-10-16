@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -11,6 +12,7 @@ import Blog from './pages/Blog';
 import About from './pages/About';
 import FAQ from './pages/FAQ';
 import ScrollToTop from './components/ScrollToTop';
+import { installChatTracking } from './services/chatTracking';
 import Login from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
 import ProductManagement from './pages/admin/ProductManagement';
@@ -19,8 +21,11 @@ import CatalogManagement from './pages/admin/CatalogManagement';
 import AccessoryManagement from './pages/admin/AccessoryManagement';
 import BlogManagement from './pages/admin/BlogManagement';
 import TestimonialManagement from './pages/admin/TestimonialManagement';
+import WebsiteChats from './pages/admin/WebsiteChats';
 
 function App() {
+  useEffect(() => installChatTracking(), []);
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -34,6 +39,7 @@ function App() {
         <Route path="/admin/accessories" element={<AccessoryManagement />} />
         <Route path="/admin/blogs" element={<BlogManagement />} />
         <Route path="/admin/testimonials" element={<TestimonialManagement />} />
+        <Route path="/admin/website-chats" element={<WebsiteChats />} />
         
         {/* Public Routes - With Header/Footer */}
         <Route path="/*" element={

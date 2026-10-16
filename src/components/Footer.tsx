@@ -1,12 +1,10 @@
 import { Heart, Mail, Phone, MapPin } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { whatsappLink } from '@/config/site';
 import { useState, useEffect } from 'react';
 
 const Footer = () => {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-  // Re-render on navigation so the WhatsApp message names the current page
-  useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');

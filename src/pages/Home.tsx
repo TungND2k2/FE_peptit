@@ -10,7 +10,7 @@ import { Product, Blog, Testimonial } from '@/types';
 import { productService } from '@/services/productService';
 import { blogService } from '@/services/blogService';
 import { testimonialService } from '@/services/testimonialService';
-import { IMAGES, whatsappLink } from '@/config/site';
+import { IMAGES, SITE_NAME, whatsappLink } from '@/config/site';
 import { WHOLESALE_STEPS } from '@/data/company';
 import { FAQS } from '@/data/faq';
 
@@ -20,7 +20,7 @@ const fadeUp = {
   viewport: { once: true },
 };
 
-const CATALOG_REQUEST = "Hi Peptit Elegance, I'd like to receive your wholesale catalog and pricing.";
+const CATALOG_REQUEST = `Hi! I'm messaging from ${SITE_NAME}. I'd like to receive your wholesale catalog and pricing.`;
 
 // MOQ, samples, production time, shipping
 const FAQ_TEASER = [3, 5, 6, 8].map((i) => FAQS[i]);

@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MessageCircle, X } from 'lucide-react';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { messengerLink, whatsappLink } from '@/config/site';
 
 const WhatsAppIcon = () => (
@@ -23,8 +22,6 @@ const channels = [
 
 const FloatingContact = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // Re-render on navigation so the prefilled message names the current page
-  useLocation();
 
   return (
     <div className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-50 flex flex-col items-end gap-3">
