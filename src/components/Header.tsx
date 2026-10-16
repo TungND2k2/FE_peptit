@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Search, Menu, X, LayoutDashboard } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { whatsappLink } from '@/config/site';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home' },
@@ -59,7 +60,7 @@ const Header = () => {
           {/* WhatsApp Contact */}
           <div className="hidden lg:flex flex-col items-end pr-4 border-r-2 border-primary-600">
             <span className="text-primary-600 font-body text-sm font-semibold">Have any questions?</span>
-            <a href="https://wa.me/84877336320" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-primary-600 transition font-body text-sm">
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-primary-600 transition font-body text-sm">
               <span>Free: +84 877336320</span>
             </a>
           </div>

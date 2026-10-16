@@ -1,9 +1,12 @@
 import { Heart, Mail, Phone, MapPin } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { whatsappLink } from '@/config/site';
 import { useState, useEffect } from 'react';
 
 const Footer = () => {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  // Re-render on navigation so the WhatsApp message names the current page
+  useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -111,7 +114,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-2 text-gray-600">
                 <Phone className="w-4 h-4" />
-                <a href="https://wa.me/84877336320" target="_blank" rel="noopener noreferrer" className="hover:text-primary-600 transition">
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="hover:text-primary-600 transition">
                   +84 877336320
                 </a>
               </li>

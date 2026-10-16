@@ -1,7 +1,7 @@
 import { MessageCircle } from 'lucide-react';
 import FaqAccordion from '@/components/FaqAccordion';
 import { FAQS } from '@/data/faq';
-import { CONTACT } from '@/config/site';
+import { whatsappLink } from '@/config/site';
 
 const FAQ = () => (
   <div className="bg-white">
@@ -27,7 +27,7 @@ const FAQ = () => (
           <h2 className="font-display text-2xl font-bold text-gray-800 mb-2">Still have questions?</h2>
           <p className="text-gray-600 font-body mb-6">Our team usually replies within a few hours.</p>
           <a
-            href={CONTACT.whatsappUrl}
+            href={whatsappLink()}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-primary-600 text-white px-7 py-3 rounded-full font-body font-semibold shadow-lg hover:bg-primary-700 transition"

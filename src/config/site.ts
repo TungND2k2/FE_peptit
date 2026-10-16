@@ -26,6 +26,19 @@ export const IMAGES = {
   joinGroupQr: '/images/qr-join-group.svg',
 };
 
-// WhatsApp chat link with a prefilled inquiry about an item
+// Every chat started from the site is prefilled with a message that ends with the page it came from,
+// so the team can tell website leads apart in WhatsApp/Messenger
+const DEFAULT_MESSAGE = "Hi Peptit Elegance! I found you on your website and I'd like to know more.";
+
+export const chatMessage = (body: string = DEFAULT_MESSAGE, pageUrl: string = window.location.href) =>
+  `${body}\n\n(Sent from ${pageUrl})`;
+
+export const whatsappLink = (body?: string, pageUrl?: string) =>
+  `${CONTACT.whatsappUrl}?text=${encodeURIComponent(chatMessage(body, pageUrl))}`;
+
+// `ref` is passed to the Page's webhook (useful for chatbots); `text` prefills the message box
+export const messengerLink = (body?: string, pageUrl?: string) =>
+  `${CONTACT.messengerUrl}?ref=website&text=${encodeURIComponent(chatMessage(body, pageUrl))}`;
+
 export const inquiryUrl = (itemName: string) =>
-  `${CONTACT.whatsappUrl}?text=${encodeURIComponent(`Hi Peptit Elegance, I'm interested in "${itemName}". Could you share pricing and availability?`)}`;
+  whatsappLink(`Hi Peptit Elegance, I'm interested in "${itemName}". Could you share pricing and availability?`);

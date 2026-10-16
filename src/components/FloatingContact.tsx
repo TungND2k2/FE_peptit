@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MessageCircle, X } from 'lucide-react';
 import { useState } from 'react';
-import { CONTACT } from '@/config/site';
+import { useLocation } from 'react-router-dom';
+import { messengerLink, whatsappLink } from '@/config/site';
 
 const WhatsAppIcon = () => (
   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -16,12 +17,14 @@ const MessengerIcon = () => (
 );
 
 const channels = [
-  { label: 'WhatsApp', href: CONTACT.whatsappUrl, icon: WhatsAppIcon, className: 'bg-[#25D366]' },
-  { label: 'Messenger', href: CONTACT.messengerUrl, icon: MessengerIcon, className: 'bg-gradient-to-br from-[#00B2FF] to-[#006AFF]' },
+  { label: 'WhatsApp', link: whatsappLink, icon: WhatsAppIcon, className: 'bg-[#25D366]' },
+  { label: 'Messenger', link: messengerLink, icon: MessengerIcon, className: 'bg-gradient-to-br from-[#00B2FF] to-[#006AFF]' },
 ];
 
 const FloatingContact = () => {
   const [isOpen, setIsOpen] = useState(false);
+  // Re-render on navigation so the prefilled message names the current page
+  useLocation();
 
   return (
     <div className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-50 flex flex-col items-end gap-3">
@@ -30,7 +33,7 @@ const FloatingContact = () => {
           channels.map((channel, index) => (
             <motion.a
               key={channel.label}
-              href={channel.href}
+              href={channel.link()}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 16, scale: 0.8 }}

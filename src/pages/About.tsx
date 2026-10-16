@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { MessageCircle, Users } from 'lucide-react';
-import { CONTACT, IMAGES, LINKS } from '@/config/site';
+import { IMAGES, LINKS, whatsappLink } from '@/config/site';
 import { STATS, TECHNIQUES } from '@/data/company';
 import MarketsMap from '@/components/MarketsMap';
 
@@ -132,7 +132,7 @@ const About = () => (
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href={CONTACT.whatsappUrl}
+              href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-white text-primary-600 px-7 py-3 rounded-full font-body font-semibold shadow-lg hover:shadow-xl transition"

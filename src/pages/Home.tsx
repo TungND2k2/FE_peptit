@@ -10,7 +10,7 @@ import { Product, Blog, Testimonial } from '@/types';
 import { productService } from '@/services/productService';
 import { blogService } from '@/services/blogService';
 import { testimonialService } from '@/services/testimonialService';
-import { CONTACT, IMAGES } from '@/config/site';
+import { IMAGES, whatsappLink } from '@/config/site';
 import { WHOLESALE_STEPS } from '@/data/company';
 import { FAQS } from '@/data/faq';
 
@@ -20,9 +20,7 @@ const fadeUp = {
   viewport: { once: true },
 };
 
-const quoteUrl = `${CONTACT.whatsappUrl}?text=${encodeURIComponent(
-  "Hi Peptit Elegance, I'd like to receive your wholesale catalog and pricing."
-)}`;
+const CATALOG_REQUEST = "Hi Peptit Elegance, I'd like to receive your wholesale catalog and pricing.";
 
 // MOQ, samples, production time, shipping
 const FAQ_TEASER = [3, 5, 6, 8].map((i) => FAQS[i]);
@@ -111,7 +109,7 @@ const Home = () => {
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <a
-                  href={quoteUrl}
+                  href={whatsappLink(CATALOG_REQUEST)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 bg-white text-gray-800 px-8 py-4 rounded-full font-body font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition border border-gray-200"

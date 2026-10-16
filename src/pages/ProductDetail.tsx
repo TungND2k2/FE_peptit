@@ -5,7 +5,7 @@ import { ArrowLeft, MessageCircle, Share2, Minus, Plus } from 'lucide-react';
 import { Product } from '@/types';
 import { productService } from '@/services/productService';
 import { resolveImageUrl } from '@/services/api';
-import { CONTACT } from '@/config/site';
+import { whatsappLink } from '@/config/site';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -59,9 +59,7 @@ const ProductDetail = () => {
   }
 
   const allImages = [product.imageUrl, ...(product.images || [])].filter(Boolean).map(resolveImageUrl);
-  const inquiryUrl = `${CONTACT.whatsappUrl}?text=${encodeURIComponent(
-    `Hi Peptit Elegance, I'm interested in "${product.title}" (quantity: ${quantity}).\n${window.location.href}`
-  )}`;
+  const inquiryUrl = whatsappLink(`Hi Peptit Elegance, I'm interested in "${product.title}" (quantity: ${quantity}).`);
 
   const handleShare = async () => {
     const url = window.location.href;
