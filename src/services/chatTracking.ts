@@ -25,7 +25,8 @@ const rememberVisit = () => {
   let referrer: string | undefined;
   try {
     const ref = document.referrer ? new URL(document.referrer) : null;
-    if (ref && ref.host !== window.location.host) referrer = ref.host.replace(/^www\./, '');
+    // l.instagram.com, lm.facebook.com, m.facebook.com... are link shims of the same site
+    if (ref && ref.host !== window.location.host) referrer = ref.host.replace(/^(www|l|lm|m)\./, '');
   } catch {
     // malformed referrer
   }
